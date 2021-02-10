@@ -100,7 +100,7 @@ class Lockscreen extends Component {
 							<CardFooter>
 								<Button
 									className="btn-round"
-									color="primary"
+									color="info"
 									href="#pablo"
 									size="lg"
 									onClick={(e) => this.signIn(e)}

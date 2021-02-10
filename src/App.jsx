@@ -19,7 +19,6 @@ class App extends Component {
 			  		<>
 					  <PrivateRoute exact path="/admin/dashboard" component={Dashboard} />
 					  <Route exact path="/auth/lock-screen" component={Lockscreen} />
-					  <Redirect from="/" to="/auth/lock-screen"/>
 			  		</>
 			</Router>
 		  </AuthProvider>

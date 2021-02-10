@@ -4,6 +4,9 @@ body{
     background-color:#212121 !important;
 }
 
+.bg-dark, .navbar.bg-dark, .card-chart{background: #1a1a1a !important;}
+
+
 /** Estilos de lock-screen*/
 .lockscreen-bg{
     height: calc(100vh);
@@ -25,5 +28,9 @@ body{
 /** Estilos del Dashboard*/
 .main-panel{
     border: none;
-    background-color: #212121 !important;
+    background: #212121 !important;
+}
+
+.main-panel>.content{
+    padding: 40px 30px 30px 30px;
 }
