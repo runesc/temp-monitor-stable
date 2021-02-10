@@ -1,0 +1,29 @@
+/** Estilos de la app en general*/
+
+body{
+    background-color:#212121 !important;
+}
+
+/** Estilos de lock-screen*/
+.lockscreen-bg{
+    height: calc(100vh);
+    background-image: url(../img/bg.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+.black-layer{
+    background-color: rgba(0,0,0, .7);
+    height: calc(100vh);
+}
+.card-lock-custom{
+    padding-top: 13vh;
+}
+
+
+/** Estilos del Dashboard*/
+.main-panel{
+    border: none;
+    background-color: #212121 !important;
+}
