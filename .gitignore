@@ -10,7 +10,7 @@
 
 # custom
 /src/config
-
+/db.py
 # production
 /build
 

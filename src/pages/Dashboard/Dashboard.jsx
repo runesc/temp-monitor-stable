@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // react plugin used to create charts
@@ -36,19 +36,52 @@ class Dashboard extends Component {
 
 	state = {
 		connDevices: [],
+		selectedDevice: 0,
 		prevListenedDevice: 0,
 		listenDevice: 0,
 		chartData: {
-			labels: [],
+			labels: ["", "", "", "", ""],
 			datasets: [{
+				data: [10,20,0, 40,20],
+				backgroundColor: ['rgba(255, 0, 0, 0.2)']
+			},
+			{
 				data: [],
+				backgroundColor: ['rgba(54, 162, 235, 0.2)'],
+				type: 'line'
 			}]
+		},
+		options: {
+			scales: {
+			  xAxes: [{
+				type: 'realtime'
+			  }],
+			  yAxes: [
+			  {
+				barPercentage: 1.6,
+				gridLines: {
+				  drawBorder: false,
+				  color: "rgba(29,140,248,0.0)",
+				  zeroLineColor: "transparent",
+				},
+				ticks: {
+				  suggestedMin: 0,
+				  suggestedMax: 60,
+				  padding: 20,
+				  fontColor: "#9a9a9a",
+				},
+			  },
+			],
+			},
+			plugins: {
+			  streaming: {}
+			}
 		}
 	}
+	chartRef = createRef();
 
 	componentDidMount = () => {
-		const dbRef = database.ref('/dispositivos/')
-		const { connDevices, listenDevice } = this.state
+		/*const dbRef = database.ref('/dispositivos/')
 
 		let temperature = []
 		let humidity = []
@@ -58,16 +91,9 @@ class Dashboard extends Component {
 		dbRef.on('value', (snapshot) => {
 			const data = snapshot.val().filter(e => {return e != null}) // Limpiar campo null
 
-			if (temperature.length <= 15 && labels.length <= 15){
-				temperature.push(data[0].temp)
-				humidity.push(data[0].hum)
-				labels.push(new Date().toLocaleTimeString('es-mx',{hour:'2-digit',minute:'2-digit',second:'2-digit'}) )
-			}else{
-				temperature.shift()
-				humidity.shift()
-				labels.shift()
-			}
-
+			temperature.push(data[0].temp)
+			humidity.push(data[0].hum)
+			labels.push(new Date().toLocaleTimeString('es-mx',{hour:'2-digit',minute:'2-digit',second:'2-digit'}) )
 			this.setState({
 				connDevices: [...data],
 				chartData: {
@@ -83,11 +109,11 @@ class Dashboard extends Component {
 					}]
 				}
 			})
-		})
+		})*/
 	}
 
 	// Obtener y actualizar el la grafica que se escuchará
-	getIndex = listenDevice => this.setState({listenDevice})
+	getIndex = listenDevice => this.setState({listenDevice, selectedDevice: listenDevice})
 
 
 	render() {
@@ -116,7 +142,7 @@ class Dashboard extends Component {
 											*/
 										}
 										<div className="chart-area">
-				  							<Line data={chartData} options={chartExample1.options} />
+				  							<Line ref={this.chartRef} data={chartData} options={chartExample1.options} />
 										</div>
 			  						</CardBody>
 								</Card>
@@ -152,6 +178,9 @@ class Dashboard extends Component {
 										<Table responsive>
 											<thead className="text-primary">
 												<tr>
+													<th>#</th>
+													<th>Hospital</th>
+													<th>área</th>
 													<th>Ubicación</th>
 													<th className="text-danger">Temperatura</th>
 													<th className="text-info">Humedad</th>
