@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
 
 import Dashboard from '@/pages/Dashboard/Dashboard';
-import Lockscreen from '@/pages/Lockscreen/Lockscreen';
+import SignIn from '@/pages/SignIn/SignIn';
 
 
 import { AuthProvider } from '@/providers/AuthProvider';
@@ -18,7 +18,7 @@ class App extends Component {
 				<Router>
 			  		<>
 					  <PrivateRoute exact path="/admin/dashboard" component={Dashboard} />
-					  <Route exact path="/auth/lock-screen" component={Lockscreen} />
+					  <Route exact path="/auth/signin" component={SignIn} />
 			  		</>
 			</Router>
 		  </AuthProvider>
