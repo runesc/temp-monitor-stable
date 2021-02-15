@@ -19,7 +19,7 @@ import {
 	Col,
   } from "reactstrap";
 
-import cardPrimary from '@/assets/img/card-primary.png'
+import cardInfo from '@/assets/img/card-info.png'
 import './Signin.css'
 import { AuthContext } from "@/providers/AuthProvider";
 
@@ -30,7 +30,9 @@ class SignIn extends Component {
 
 	state = {
 		emailFocus: false,
-		passFocus: false
+		passFocus: false,
+		email:"",
+		password:""
 	}
 
 	componentDidMount(){
@@ -80,7 +82,7 @@ class SignIn extends Component {
 								<CardHeader>
 									<img
 										alt="..."
-										src={cardPrimary}
+										src={cardInfo}
 									/>
 									<CardTitle tag="h1">Log in</CardTitle>
 								</CardHeader>
@@ -96,8 +98,11 @@ class SignIn extends Component {
 											</InputGroupText>
 										</InputGroupAddon>
 										<Input
-											placeholder="Email"
-											type="text"
+											
+											placeholder="email"
+											type="email"
+											onChange={ e => this.setState({email: e.target.value}) }
+										
 										/>
 											{
 												/*onFocus={(e) => setState({ ...state, emailFocus: true })}
@@ -115,8 +120,11 @@ class SignIn extends Component {
 											</InputGroupText>
 										</InputGroupAddon>
 										<Input
+											
 											placeholder="Password"
-											type="text"
+											type="password"
+											onChange={ e => this.setState({password: e.target.value}) }
+										
 										/>
 											{/*onFocus={(e) => setState({ ...state, passFocus: true })}
 											onBlur={(e) => setState({ ...state, pasFocus: false })}*/}
