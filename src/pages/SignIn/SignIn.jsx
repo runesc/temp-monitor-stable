@@ -24,7 +24,6 @@ import './Signin.css'
 import { AuthContext } from "@/providers/AuthProvider";
 
 
-
 class SignIn extends Component {
 	static contextType = AuthContext
 
@@ -98,11 +97,9 @@ class SignIn extends Component {
 											</InputGroupText>
 										</InputGroupAddon>
 										<Input
-											
 											placeholder="email"
 											type="email"
 											onChange={ e => this.setState({email: e.target.value}) }
-										
 										/>
 											{
 												/*onFocus={(e) => setState({ ...state, emailFocus: true })}
@@ -120,11 +117,9 @@ class SignIn extends Component {
 											</InputGroupText>
 										</InputGroupAddon>
 										<Input
-											
 											placeholder="Password"
 											type="password"
 											onChange={ e => this.setState({password: e.target.value}) }
-										
 										/>
 											{/*onFocus={(e) => setState({ ...state, passFocus: true })}
 											onBlur={(e) => setState({ ...state, pasFocus: false })}*/}
@@ -136,10 +131,10 @@ class SignIn extends Component {
 										className="mb-3"
 										color="info"
 										href="#pablo"
-										onClick={(e) => e.preventDefault()}
+										onClick={e => this.signIn(e)}
 										size="lg"
 									>
-										Get Started
+										Iniciar sesión
 									</Button>
 								</CardFooter>
 							</Card>

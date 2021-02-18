@@ -36,11 +36,11 @@ class AdminNavbar extends Component {
 
 
 	signOut = () => {
-		auth.signOut().then(() => this.props.history.push('/auth/lock-screen'))
+		auth.signOut().then(() => this.props.history.push('/auth/signin'))
 	}
 
 	render() {
-		const {brandText} = this.props
+		const {brandText, role, formControl} = this.props
 		const {collapseOpen} = this.state
 		return (
 			<>
@@ -100,6 +100,13 @@ class AdminNavbar extends Component {
 									<NavLink tag="li">
 										<DropdownItem className="nav-item">Settings</DropdownItem>
 									</NavLink>
+									{
+										role === 'god' ? (
+											<NavLink tag="li" onClick={formControl}>
+												<DropdownItem className="nav-item" >God opt</DropdownItem>
+											</NavLink>
+										): null
+									}
 									<DropdownItem divider tag="li" />
 									<NavLink tag="li">
 										<DropdownItem className="nav-item" onClick={(e) => this.signOut()}>Log out</DropdownItem>

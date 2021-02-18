@@ -7,7 +7,8 @@ import { Line } from "react-chartjs-2";
 import { VectorMap } from "react-jvectormap";
 import { auth, database } from '@/config/firebase'
 
-
+import { AuthContext } from "@/providers/AuthProvider";
+import { chartExample1 } from "@/variables/charts.js";
 // reactstrap components
 import {
 	Button,
@@ -28,102 +29,45 @@ import {
 
 import AdminNavbar from '@/components/AdminNavbar/AdminNavbar';
 import TrItem from '@/components/TrItem/TrItem';
-
-import { chartExample1 } from "@/variables/charts.js";
+import GForm from '@/pages/GForm/GForm';
 
 
 class Dashboard extends Component {
+	static contextType = AuthContext
 
 	state = {
+		userInfo: {},
+		userDbInfo: {},
+		showForm: false,
 		connDevices: [],
 		selectedDevice: 0,
 		prevListenedDevice: 0,
 		listenDevice: 0,
-		chartData: {
-			labels: ["", "", "", "", ""],
-			datasets: [{
-				data: [10,20,0, 40,20],
-				backgroundColor: ['rgba(255, 0, 0, 0.2)']
-			},
-			{
-				data: [],
-				backgroundColor: ['rgba(54, 162, 235, 0.2)'],
-				type: 'line'
-			}]
-		},
-		options: {
-			scales: {
-			  xAxes: [{
-				type: 'realtime'
-			  }],
-			  yAxes: [
-			  {
-				barPercentage: 1.6,
-				gridLines: {
-				  drawBorder: false,
-				  color: "rgba(29,140,248,0.0)",
-				  zeroLineColor: "transparent",
-				},
-				ticks: {
-				  suggestedMin: 0,
-				  suggestedMax: 60,
-				  padding: 20,
-				  fontColor: "#9a9a9a",
-				},
-			  },
-			],
-			},
-			plugins: {
-			  streaming: {}
-			}
-		}
+		chartData: {},
+		options: {},
 	}
-	chartRef = createRef();
 
-	componentDidMount = () => {
-		/*const dbRef = database.ref('/dispositivos/')
-
-		let temperature = []
-		let humidity = []
-		let labels = []
-
-		// Buscar cambios en los dispositivos
-		dbRef.on('value', (snapshot) => {
-			const data = snapshot.val().filter(e => {return e != null}) // Limpiar campo null
-
-			temperature.push(data[0].temp)
-			humidity.push(data[0].hum)
-			labels.push(new Date().toLocaleTimeString('es-mx',{hour:'2-digit',minute:'2-digit',second:'2-digit'}) )
-			this.setState({
-				connDevices: [...data],
-				chartData: {
-					labels: [...labels],
-					datasets: [{
-						data: [...temperature],
-						backgroundColor: ['rgba(255, 0, 0, 0.2)']
-					},
-					{
-						data: [...humidity],
-						backgroundColor: ['rgba(54, 162, 235, 0.2)'],
-						type: 'line'
-					}]
-				}
-			})
-		})*/
-	}
+	chartRef = createRef(); // Esto es una ref (se usará para el streaming del grafico)
 
 	// Obtener y actualizar el la grafica que se escuchará
 	getIndex = listenDevice => this.setState({listenDevice, selectedDevice: listenDevice})
 
+	// Esta funcion está desactualizada pero es un mal necesario
+	componentWillMount = () => this.setState({userInfo: this.context.currentUser})
+
+	showForm = () => this.setState({showForm: !this.state.showForm}) // crear switch de formuario
 
 	render() {
-		const { connDevices, chartData } = this.state
+		const { connDevices, chartData, userDbInfo, showForm } = this.state
 		return (
 			<div className="wrapper">
 				<div className="main-panel">
-					<AdminNavbar brandText="MONITOREO DE TEMPERATURA"/>
+					<AdminNavbar brandText="MONITOREO DE TEMPERATURA" role={userDbInfo.role} formControl={(e) => this.showForm()}/>
 
 					<div className="content">
+						{
+							showForm ? (<GForm/>): (
+						<>
 						<Row>
 							<Col xs="12">
 								<Card className="card-chart">
@@ -148,7 +92,6 @@ class Dashboard extends Component {
 								</Card>
 							</Col>
 						</Row>
-						{ /**  LISTA DE DISPOSITIVOS  */ }
 						<Row>
 							<Col lg="12">
 								<Card className="bg-dark">
@@ -202,10 +145,17 @@ class Dashboard extends Component {
 								</Card>
 							</Col>
 						</Row>
+						</>
+						)}
 					</div>
 				</div>
 			</div>
 		);
+	}
+
+	componentDidMount = () =>{
+		const {userInfo} = this.state
+		database.ref('users/' + userInfo.uid).once('value').then( snapshot => this.setState({userDbInfo: snapshot.val()}))
 	}
 }
 
