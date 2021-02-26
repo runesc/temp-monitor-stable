@@ -20,7 +20,6 @@ import {
   } from "reactstrap";
 
 import cardInfo from '@/assets/img/card-info.png'
-import './Signin.css'
 import { AuthContext } from "@/providers/AuthProvider";
 
 
@@ -40,11 +39,10 @@ class SignIn extends Component {
 		if (currentUser){
 			this.props.history.push('/admin/dashboard')
 		}
-		this.toggleClass()
 	}
 
 
-	toggleClass = () => {
+	componentWillMount = () => {
 		document.body.classList.toggle("login-page");
 		return function cleanup() {
 			document.body.classList.toggle("login-page");

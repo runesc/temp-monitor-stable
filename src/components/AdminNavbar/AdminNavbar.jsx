@@ -2,21 +2,16 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 // reactstrap components
 import {
-	Button,
 	Collapse,
 	DropdownToggle,
 	DropdownMenu,
 	DropdownItem,
 	UncontrolledDropdown,
-	Input,
-	InputGroup,
 	NavbarBrand,
 	Navbar,
 	NavLink,
 	Nav,
 	Container,
-	Modal,
-	UncontrolledTooltip,
 } from "reactstrap";
 
 import { auth } from '@/config/firebase';

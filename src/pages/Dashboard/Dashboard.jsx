@@ -38,13 +38,18 @@ class Dashboard extends Component {
 	state = {
 		userInfo: {},
 		userDbInfo: {},
-		showForm: false,
+		showForm: true,
 		connDevices: [],
 		selectedDevice: 0,
 		prevListenedDevice: 0,
 		listenDevice: 0,
-		chartData: {},
-		options: {},
+		chartData: {
+			labels: [],
+			datasets: [{
+				data: [],
+				backgroundColor: ['rgba(255, 0, 0, 0.2)']
+			}]
+		}
 	}
 
 	chartRef = createRef(); // Esto es una ref (se usará para el streaming del grafico)
@@ -96,6 +101,8 @@ class Dashboard extends Component {
 							<Col lg="12">
 								<Card className="bg-dark">
 									<CardHeader>
+										{
+										userDbInfo.role === "admin" || userDbInfo.role === "god" ?
 										<div className="tools float-right">
 											<UncontrolledDropdown>
 												<DropdownToggle caret className="btn-icon" color="link" data-toggle="dropdown" type="button" >
@@ -114,7 +121,8 @@ class Dashboard extends Component {
 					 	 							</DropdownItem>
 												</DropdownMenu>
 											</UncontrolledDropdown>
-										</div>
+										</div> : null
+										}
 										<CardTitle tag="h5"> Tabla de dispositivos </CardTitle>
 									</CardHeader>
 									<CardBody>
@@ -156,6 +164,11 @@ class Dashboard extends Component {
 	componentDidMount = () =>{
 		const {userInfo} = this.state
 		database.ref('users/' + userInfo.uid).once('value').then( snapshot => this.setState({userDbInfo: snapshot.val()}))
+
+		/*let dispositivo1 = database.ref('hospitales/-MTObdkBPuHAaWbIoZlC/area/hemodinamia/T6p9otTv46MkUDu3jgUpSr/dispositivos/XxmNuDmwvYgGLRTABeVhYV').onWrite((change, context) => {
+			const beforeData = change.before.val(); // data before the write
+			const afterData = change.after.val(); // data after the write
+		   });*/
 	}
 }
 

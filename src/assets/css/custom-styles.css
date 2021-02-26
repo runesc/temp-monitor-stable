@@ -34,3 +34,16 @@ body{
 .main-panel>.content{
     padding: 40px 30px 30px 30px;
 }
+
+/** Estilos LOGIN*/
+.add-margin{
+    margin-top: calc(10vh) !important;
+}
+
+/** Estilos admin panel*/
+.form-control, * textarea.form-control, .login-page textarea.form-control, .card-login.card-white textarea.form-control{
+    border-color: gray;
+}
+.react-select .react-select__control, .react-select .react-select__control:hover{
+    border-color: gray;
+}
