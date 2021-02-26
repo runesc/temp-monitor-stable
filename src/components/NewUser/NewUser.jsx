@@ -58,7 +58,7 @@ class NewUser extends Component {
 		}
 
 		// llamar aqui a la API hecha en heroku
-		axios.post('http://localhost:5000/users', {
+		axios.post('https://temp-monitor-app-api.herokuapp.com/users', {
 			name, lastname, phone, email, password,
 			worksfot: selectedHospital,
 			role
